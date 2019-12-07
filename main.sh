@@ -68,8 +68,8 @@ else
 	/opt/microsoft/omsagent/bin/omsadmin.sh
 fi
 
-if [ -v WSID ] && [ -e "/etc/opt/microsoft/omsagent/security_events.conf" ]; then
-  mv /etc/opt/microsoft/omsagent/security_events.conf /etc/opt/microsoft/omsagent/$WSID/conf/omsagent.d/security_events.conf
+if [ -v WSID ] && [ -e "/opt/security_events.conf" ]; then
+  mv /opt/security_events.conf /etc/opt/microsoft/omsagent/conf/omsagent.d/security_events.conf
 fi
 #Hack for omi upgrade
  
