@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sed -i -e 's/bind 127.0.0.1/bind 0.0.0.0/g' /etc/opt/microsoft/omsagent/sysconf/omsagent.d/container.conf
+#sed -i -e 's/bind 127.0.0.1/bind 0.0.0.0/g' /etc/opt/microsoft/omsagent/sysconf/omsagent.d/container.conf
 sed -i -e 's/bind 127.0.0.1/bind 0.0.0.0/g' /etc/opt/microsoft/omsagent/sysconf/omsagent.d/syslog.conf
 sed -i -e 's/^exit 101$/exit 0/g' /usr/sbin/policy-rc.d
 
@@ -42,9 +42,11 @@ sed -i.bak "s/record\[\"Host\"\] = hostname/record\[\"Host\"\] = OMS::Common.get
 /opt/microsoft/omsconfig/Scripts/OMS_MetaConfigHelper.py --disable
 rm -f /etc/opt/microsoft/omsagent/conf/omsagent.d/omsconfig.consistencyinvoker.conf
 
+
 #service omid start
 /opt/omi/bin/omiserver -s
 /opt/omi/bin/omiserver --configfile=/etc/opt/omi/conf/omiserver.conf -d
+
 
 if [ -z $INT ]; then
   if [ -a /etc/omsagent-secret/DOMAIN ]; then
@@ -66,6 +68,9 @@ else
 	/opt/microsoft/omsagent/bin/omsadmin.sh
 fi
 
+if [ -v WSID ] && [ -e "/etc/opt/microsoft/omsagent/security_events.conf" ]; then
+  mv /etc/opt/microsoft/omsagent/security_events.conf /etc/opt/microsoft/omsagent/$WSID/conf/omsagent.d/security_events.conf
+fi
 #Hack for omi upgrade
  
  /opt/omi/bin/omicli id
