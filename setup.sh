@@ -1,7 +1,7 @@
 TMPDIR="/opt"
 cd $TMPDIR
 
-wget https://github.com/Microsoft/OMS-Agent-for-Linux/releases/download/OMSAgent_v1.6.0-42/omsagent-1.6.0-42.universal.x64.sh
+wget -q https://github.com/Microsoft/OMS-Agent-for-Linux/releases/download/OMSAgent_v1.6.0-42/omsagent-1.6.0-42.universal.x64.sh
 
 #create file to disable omi service startup script
 touch /etc/.omi_disable_service_control
@@ -22,13 +22,13 @@ $TMPDIR/omsbundle/bundles/scx-1.6.*-*.universal.x64.sh --install
 #Install omsagent and omsconfig
 /usr/bin/dpkg -i $TMPDIR/omsbundle/100/omsagent*.deb
 /usr/bin/dpkg -i $TMPDIR/omsbundle/100/omsconfig*.deb
-#/$TMPDIR/omsbundle/oss-kits/docker-cimprov-1.0.0-*.x86_64.sh --install
-#Use downloaded docker-provider instead of the bundled one
 
-#Install CEF
-python cef_installer.py
-#/$TMPDIR/docker-cimprov-1.0.0-*.x86_64.sh --install
+
+# Configure for Configuration for collection of security solution logs 
+# https://github.com/microsoft/OMS-Agent-for-Linux/blob/master/docs/Security-Events-Preview-Configuration.md
+python rsyslogconf.py
+wget https://github.com/Microsoft/OMS-Agent-for-Linux/blob/master/installer/conf/omsagent.d/security_events.conf -O /opt/security_events.conf
 
 rm -rf $TMPDIR/omsbundle
 rm -f $TMPDIR/omsagent*.sh
-#rm -f $TMPDIR/docker-cimprov*.sh
+

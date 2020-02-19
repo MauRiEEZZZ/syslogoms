@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sed -i -e 's/bind 127.0.0.1/bind 0.0.0.0/g' /etc/opt/microsoft/omsagent/sysconf/omsagent.d/container.conf
+#sed -i -e 's/bind 127.0.0.1/bind 0.0.0.0/g' /etc/opt/microsoft/omsagent/sysconf/omsagent.d/container.conf
 sed -i -e 's/bind 127.0.0.1/bind 0.0.0.0/g' /etc/opt/microsoft/omsagent/sysconf/omsagent.d/syslog.conf
 sed -i -e 's/^exit 101$/exit 0/g' /usr/sbin/policy-rc.d
 
@@ -65,6 +65,8 @@ else
 	echo SHARED_KEY=$KEY >> /etc/omsagent-onboard.conf
 	/opt/microsoft/omsagent/bin/omsadmin.sh
 fi
+
+mv /opt/security_events.conf /etc/opt/microsoft/omsagent/conf/omsagent.d/security_events.conf
 
 #Hack for omi upgrade
  
