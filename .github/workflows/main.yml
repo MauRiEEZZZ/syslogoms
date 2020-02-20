@@ -1,8 +1,8 @@
-name: CI
+name: Build Docker image and push to DockerHub
 
 on:
   release:
-   types: [published]
+    types: [published]
 
 jobs:
   build:
@@ -10,16 +10,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@master
-      - name: Publish Docker
-        uses: elgohr/Publish-Docker-Github-Action@2.12
-        with:
-          # The name of the image you would like to push
-          name: meauris/syslogoms
-          # The login username for the registry
-          username: ${{ secrets.DOCKER_USERNAME }}
-          # The login password for the registry
-          password: ${{ secrets.DOCKER_PASSWORD }}
-          tags: "latest"
-          # Use tag_names when you want to push tags/release by their git name
-          # tag_names: # optional
+    - uses: actions/checkout@v2
+    - name: Login to DockerHub registry
+      run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag meauris/syslogoms:latest
+    - name: Push to DockerHub
+      run: docker push meauris/syslogoms:latest
