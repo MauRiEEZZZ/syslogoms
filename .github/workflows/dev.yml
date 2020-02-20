@@ -1,4 +1,4 @@
-name: Build Docker image and push to DockerHub
+name: Dev Build Docker image and push to DockerHub with label
 
 on:
   push:

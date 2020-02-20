@@ -76,6 +76,9 @@ sudo /opt/microsoft/omsagent/bin/service_control restart
 #start cron daemon for logrotate
 service cron start
 
+#start rsyslog for syslog
+service rsyslog start
+
 #check if agent onboarded successfully
 /opt/microsoft/omsagent/bin/omsadmin.sh -l
 
