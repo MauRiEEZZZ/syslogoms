@@ -67,7 +67,7 @@ else
 fi
 
 mv /opt/security_events.conf /etc/opt/microsoft/omsagent/conf/omsagent.d/security_events.conf
-
+sudo /opt/microsoft/omsagent/bin/service_control restart
 #Hack for omi upgrade
  
  /opt/omi/bin/omicli id
