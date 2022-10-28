@@ -1,7 +1,7 @@
 TMPDIR="/opt"
 cd $TMPDIR
 
-wget -q https://github.com/Microsoft/OMS-Agent-for-Linux/releases/download/OMSAgent_v1.6.0-42/omsagent-1.6.0-42.universal.x64.sh
+wget -q https://github.com/microsoft/OMS-Agent-for-Linux/releases/download/OMSAgent_v1.14.20-0/omsagent-1.14.20-0.universal.x64.sh
 
 #create file to disable omi service startup script
 touch /etc/.omi_disable_service_control
@@ -13,20 +13,16 @@ chmod 775 $TMPDIR/*.sh
 $TMPDIR/omsagent-*.universal.x64.sh --extract
 mv $TMPDIR/omsbundle* $TMPDIR/omsbundle
 #Install omi
-/usr/bin/dpkg -i $TMPDIR/omsbundle/100/omi*.deb
+/usr/bin/dpkg -i $TMPDIR/omsbundle/110/omi*.deb
 
 #Install scx
-/usr/bin/dpkg -i $TMPDIR/omsbundle/100/scx*.deb
-$TMPDIR/omsbundle/bundles/scx-1.6.*-*.universal.x64.sh --install
+/usr/bin/dpkg -i $TMPDIR/omsbundle/110/scx*.deb
 
 #Install omsagent and omsconfig
-/usr/bin/dpkg -i $TMPDIR/omsbundle/100/omsagent*.deb
-/usr/bin/dpkg -i $TMPDIR/omsbundle/100/omsconfig*.deb
-
+/usr/bin/dpkg -i $TMPDIR/omsbundle/110/omsagent*.deb
 
 # Configure for Configuration for collection of security solution logs 
 # https://github.com/microsoft/OMS-Agent-for-Linux/blob/master/docs/Security-Events-Preview-Configuration.md
-#python rsyslogconf.py
 wget https://raw.githubusercontent.com/microsoft/OMS-Agent-for-Linux/master/installer/conf/omsagent.d/security_events.conf -O /opt/security_events.conf
 
 rm -rf $TMPDIR/omsbundle
