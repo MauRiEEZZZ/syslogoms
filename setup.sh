@@ -26,9 +26,8 @@ $TMPDIR/omsbundle/bundles/scx-1.6.*-*.universal.x64.sh --install
 
 # Configure for Configuration for collection of security solution logs 
 # https://github.com/microsoft/OMS-Agent-for-Linux/blob/master/docs/Security-Events-Preview-Configuration.md
-python rsyslogconf.py
-wget https://github.com/Microsoft/OMS-Agent-for-Linux/blob/master/installer/conf/omsagent.d/security_events.conf -O /opt/security_events.conf
+#python rsyslogconf.py
+wget https://raw.githubusercontent.com/microsoft/OMS-Agent-for-Linux/master/installer/conf/omsagent.d/security_events.conf -O /opt/security_events.conf
 
 rm -rf $TMPDIR/omsbundle
 rm -f $TMPDIR/omsagent*.sh
-
