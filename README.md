@@ -23,7 +23,7 @@ $> sudo docker build -t syslogoms .
 
 Copy the ca.pem, cert.pem en key.pem to your current directory and run (make sure that the permissions on the pem files are sufficient):
 ```
-$> sudo docker run -d -e WSID="your workspace id" -e KEY="your key" -e TLS="true" -p 514:514/tcp -p 514:514/udp -p 6514:6514/tcp -p 6514:6514/udp -v $(pwd)/ca.pem:/etc/rsyslog.d/ca.pem -v $(pwd)/cert.pem:/etc/rsyslog.d/cert.pem -v $(pwd)/key.pem:/etc/rsyslog.d/key.pem --restart=always syslogoms
+$> sudo docker run -d -e WSID="your workspace id" -e KEY="your key" -e TLS="true" -p 514:514/tcp -p 514:514/udp -p 6514:6514/tcp -v $(pwd)/ca.pem:/etc/rsyslog.d/ca.pem -v $(pwd)/cert.pem:/etc/rsyslog.d/cert.pem -v $(pwd)/key.pem:/etc/rsyslog.d/key.pem --restart=always syslogoms
 ```
 
 If you don't want TLS, simply change "TLS=true" to "TLS=false" and remove the -v options (mounts)

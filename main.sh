@@ -36,6 +36,9 @@ StreamDriver.Authmode="x509/certvalid"
 )
 
 input(type="imtcp" port="6514")
+
+module(load="imudp")
+input(type="imudp" port="514")
 ''' >> /etc/rsyslog.conf
 else
 echo '''
@@ -44,6 +47,9 @@ load="imtcp"
 )
 
 input(type="imtcp" port="514")
+
+module(load="imudp")
+input(type="imudp" port="514")
 ''' >> /etc/rsyslog.conf
 fi
 
