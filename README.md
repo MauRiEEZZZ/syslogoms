@@ -12,16 +12,24 @@ Alternatively, you can deploy the agent manually on an existing Azure VM, on a V
 
 This container allows you to easily deploy the agent manually with a few (docker) commands.
 
-## How to use this container on a host
+# How to use this container?
 
-### Prepare all necessary files and build the container
+Prepare all necessary files and build the container
 ```
 $> git clone https://github.com/zolderio/syslogoms.git
 $> cd syslogoms
 $> sudo docker build -t syslogoms .
 ```
+## Start the OMS container without TLS support:
+```
+$> sudo docker run -d -e WSID="your workspace id" -e KEY="your key" -e TLS="false" -p 514:514/tcp -p 514:514/udp --restart=always syslogoms
+```
 
-### Start the OMS container with TLS enabled:
+The container will (rsyslog) listen on:
+- 514/tcp
+- 514/udp
+
+## Start the container with TLS support:
 First generate certificates using the following instructions:
 https://www.thegeekdiary.com/how-to-configure-rsyslog-server-to-accept-logs-via-ssl-tls/
 
@@ -30,7 +38,7 @@ Copy the generated ca.pem, cert.pem en key.pem to your current directory and run
 $> sudo docker run -d -e WSID="your workspace id" -e KEY="your key" -e TLS="true" -p 514:514/tcp -p 514:514/udp -p 6514:6514/tcp -v $(pwd)/ca.pem:/etc/rsyslog.d/ca.pem -v $(pwd)/cert.pem:/etc/rsyslog.d/cert.pem -v $(pwd)/key.pem:/etc/rsyslog.d/key.pem --restart=always syslogoms
 ```
 
-### Start the OMS container without TLS enabled:
-```
-$> sudo docker run -d -e WSID="your workspace id" -e KEY="your key" -e TLS="false" -p 514:514/tcp -p 514:514/udp --restart=always syslogoms
-```
+The container will (rsyslog) listen on:
+- 514/tcp
+- 514/udp
+- 6514/tcp
