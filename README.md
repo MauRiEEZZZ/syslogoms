@@ -41,4 +41,33 @@ $> sudo docker run -d -e WSID="your workspace id" -e KEY="your key" -e TLS="true
 The container will (rsyslog) listen on:
 - 514/tcp
 - 514/udp
-- 6514/tcp
+- 6514/tcp (TLS)
+
+# Client rsyslog config examples
+
+Send logs unencrypted TCP (514/tcp)
+```
+action(type="omfwd" protocol="tcp" port="514" target="127.0.0.1")
+```
+
+Send logs unencrypted UDP (514/udp)
+```
+action(type="omfwd" protocol="udp" port="514" target="127.0.0.1")
+```
+
+Send logs over TLS (6514/tcp):
+```
+global(
+DefaultNetstreamDriverCAFile="/home/kali/Desktop/test/syslogoms/ca.pem"
+DefaultNetstreamDriverCertFile="/home/kali/Desktop/test/syslogoms/cert.pem"
+DefaultNetstreamDriverKeyFile="/home/kali/Desktop/test/syslogoms/key.pem"
+)
+
+action(type="omfwd" protocol="tcp" port="6514" target="127.0.0.1"
+       StreamDriver="gtls" StreamDriverMode="1" StreamDriverAuthMode="x509/certvalid")
+```
+
+
+
+
+
